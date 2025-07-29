@@ -28,10 +28,10 @@ int main(int argc, char* argv[]) {
     if (process == 0) {
         int status;
         waitpid(process, &status, 0);
-        printf("Both processes exited tbf\n");
+        printf("success\n");
     }
     else {
-        execl("worker", "worker", src, dest,NULL);
+        execl("worker", "worker", "copy", src, dest, NULL);
     }
 
     return 0;

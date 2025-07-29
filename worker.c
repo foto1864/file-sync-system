@@ -7,7 +7,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define ERR_USAGE "Usage: ./worker <operation> <src> <dest>"
+#define EWRUSAGE 1
 #define MAX_BUFF_SIZE 1024
+
+int copy_file(const char* src, const char* dest);
+
+int main(int argc, char* argv[]) {
+    
+    if (argc != 4) {
+        printf("%s\n", ERR_USAGE);
+        exit(EWRUSAGE);
+    }
+    const char* operation = argv[1];
+    const char* src = argv[2];
+    const char* dest = argv[3];
+
+    if (strncmp(operation, "copy", 4) != 0) {
+        printf("%s\n", ERR_USAGE);
+        exit(EWRUSAGE);     
+    }
+
+    int copied = copy_file(src, dest);
+    if (copied != 0) {
+        strerror(errno);
+        exit(errno);
+    }
+
+    char report[MAX_BUFF_SIZE];   
+    if (strncmp(operation, "copy", 4) == 0) {
+        snprintf(report, MAX_BUFF_SIZE,"File copied from '%s' to '%s'\n", src, dest);
+    }
+    
+    int fd_logs = open("file-sync-logs.txt", O_CREAT | O_APPEND | O_WRONLY, 0644); 
+    ssize_t bytes_written = write(fd_logs, report, strlen(report));
+    if (bytes_written < 0) {
+        perror("write failed: ");
+        exit(errno);
+    }
+
+    return 0;
+}
+
 
 int copy_file(const char* src, const char* dest) {
     int fd_source = open(src, O_RDONLY);
@@ -32,26 +73,5 @@ int copy_file(const char* src, const char* dest) {
         perror("write failed: ");
         return errno;
     }
-    return 0;
-}
-
-#define ERR_USAGE "Usage: ./worker <src> <dest>"
-#define EWRUSAGE 1
-
-int main(int argc, char* argv[]) {
-    
-    if (argc != 3) {
-        printf("%s\n", ERR_USAGE);
-        exit(EWRUSAGE);
-    }
-    const char* src = argv[1];
-    const char* dest = argv[2];
-
-    int copied = copy_file(src, dest);
-    if (copied != 0) {
-        strerror(errno);
-        exit(errno);
-    }
-    printf("File copied from <%s> to <%s>\n", src, dest);
     return 0;
 }
