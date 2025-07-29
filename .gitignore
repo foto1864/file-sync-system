@@ -1,0 +1,10 @@
+# VS Code Stuff
+/.vscode
+
+# Build
+main
+worker
+
+# Test 
+backup.txt
+text.txt
