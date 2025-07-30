@@ -3,7 +3,7 @@ make:
 	gcc -o worker src/worker.c
 
 run:
-	./manager test-files/text.txt backup/test.txt -l logs/file-sync-logs.txt 
+	./manager -o copy test-files/text.txt backup/test.txt -l logs/file-sync-logs.txt 
 
 clean:
 	- rm -rf backup

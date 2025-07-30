@@ -35,9 +35,7 @@ int main(int argc, char* argv[]) {
     }
 
     char report[MAX_BUFF_SIZE];   
-    if (strncmp(operation, "copy", 4) == 0) {
-        snprintf(report, MAX_BUFF_SIZE,"File copied from '%s' to '%s'\n", src, dest);
-    }
+    snprintf(report, MAX_BUFF_SIZE,"File copied from '%s' to '%s'\n", src, dest);
 
     int fd_out = open("worker-manager", O_WRONLY);
     ssize_t bytes_sent = write(fd_out, report, strlen(report));

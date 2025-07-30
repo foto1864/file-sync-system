@@ -2,9 +2,14 @@
 /.vscode
 
 # Build
-main
+manager
 worker
 
+# fifo pipes
+worker-manager
+
 # Test 
+/backup
+/test-files
 backup.txt
 text.txt
