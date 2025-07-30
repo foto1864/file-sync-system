@@ -1,3 +1,0 @@
-File copied from 'text.txt' to 'backup.txt'
-File copied from 'text.txt' to 'backup.txt'
-File copied from 'text.txt' to 'backup.txt'

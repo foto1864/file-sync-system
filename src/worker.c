@@ -38,11 +38,11 @@ int main(int argc, char* argv[]) {
     if (strncmp(operation, "copy", 4) == 0) {
         snprintf(report, MAX_BUFF_SIZE,"File copied from '%s' to '%s'\n", src, dest);
     }
-    
-    int fd_logs = open("file-sync-logs.txt", O_CREAT | O_APPEND | O_WRONLY, 0644); 
-    ssize_t bytes_written = write(fd_logs, report, strlen(report));
-    if (bytes_written < 0) {
-        perror("write failed: ");
+
+    int fd_out = open("worker-manager", O_WRONLY);
+    ssize_t bytes_sent = write(fd_out, report, strlen(report));
+    if (bytes_sent < 0) {
+        perror("write failed");
         exit(errno);
     }
 
@@ -53,24 +53,24 @@ int main(int argc, char* argv[]) {
 int copy_file(const char* src, const char* dest) {
     int fd_source = open(src, O_RDONLY);
     if (fd_source < 0) {
-        perror("open failed: ");
+        perror("open failed");
         return errno;
     }
     int fd_dest = open(dest, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fd_dest < 0) {
-        perror("open failed: ");
+        perror("open failed");
         return errno;
     }
 
     char buffer[MAX_BUFF_SIZE];
     ssize_t bytes_read = read(fd_source, buffer, MAX_BUFF_SIZE);
     if (bytes_read < 0) {
-        perror("read failed: ");
+        perror("read failed");
         return errno;
     }
     ssize_t bytes_written = write(fd_dest, buffer, bytes_read);
     if (bytes_written < 0) {
-        perror("write failed: ");
+        perror("write failed");
         return errno;
     }
     return 0;
