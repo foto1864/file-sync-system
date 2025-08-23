@@ -5,6 +5,9 @@
 manager
 worker
 
+# logs
+/logs
+
 # fifo pipes
 worker-manager
 
@@ -13,3 +16,4 @@ worker-manager
 /test-files
 backup.txt
 text.txt
+manager

@@ -11,7 +11,7 @@
 #define ERR_USAGE "Usage: ./manager -o <operation> <src> <dest> -l <logfile>"
 #define EWRUSAGE 1
 
-#define MAX_BUFFER_SIZE 1024
+#define MAX_BUFFER_SIZE 65536
 
 ssize_t readline(int _fd, char* _buf, ssize_t _nbytes);
 

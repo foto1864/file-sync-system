@@ -9,7 +9,7 @@
 
 #define ERR_USAGE "Usage: ./worker <operation> <src> <dest>"
 #define EWRUSAGE 1
-#define MAX_BUFF_SIZE 1024
+#define MAX_BUFF_SIZE 65536
 
 int copy_file(const char* src, const char* dest);
 
